@@ -59,23 +59,13 @@ var NSROOTHOSTS = [
 
 // FORWARD DOMAINS
 D('thefathacker.tech', REG_NONE, DnsProvider(DNS_BIND), NSSERVERS, SPF, O365, STUB_PRD_AD, NSROOTHOSTS,
-			A('wrt-appr-1', '10.41.16.1'),
-			A('esx-apps-1.vcs','10.41.17.1'),
-			AAAA('esx-apps-1.vcs','2001:44b8:2148:2911::1'),
-			A('esx-apps-2.vcs','10.41.17.2'),
-			AAAA('esx-apps-2.vcs','2001:44b8:2148:2911::2'),
-			A('vcs-apvs-1.vcs','10.41.32.4'),
-			AAAA('vcs-apvs-1.vcs','2001:44b8:2148:2920::4'),
-			A('dude-apvs-1','10.41.48.1'),
-			AAAA('dude-apvs-1','2001:44b8:2148:2930::1'),
-			A('glpi-apvs-1','10.41.48.2'),
-			AAAA('glpi-apvs-1','2001:44b8:2148:2930::2'),
-			A('netbox-apvs-1','10.41.48.3'),
-			AAAA('netbox-apvs-1','2001:44b8:2148:2930::3'),
-			A('mysql-apvs-1','10.41.49.1'),
-			AAAA('mysql-apvs-1','2001:44b8:2148:2931::1'),
-			A('psql-apvs-1','10.41.49.2'),
-			AAAA('psql-apvs-1','2001:44b8:2148:2931::2')
+			A('wrt-appr-1', '10.41.16.1'),			AAAA('wrt-appr-1','2001:44b8:2148:2910::1'),
+			A('esx-apps-1.vcs','10.41.17.1'),		AAAA('esx-apps-1.vcs','2001:44b8:2148:2911::1'),
+			A('esx-apps-2.vcs','10.41.17.2'),		AAAA('esx-apps-2.vcs','2001:44b8:2148:2911::2'),
+			A('docker-apvs-1','10.41.18.1'),	AAAA('docker-apvs-1','2001:44b8:2148:2912::1'),
+			A('vcs-apvs-1.vcs','10.41.32.4'),		AAAA('vcs-apvs-1.vcs','2001:44b8:2148:2920::4'),
+			A('dude-apvs-1','10.41.48.1'),			AAAA('dude-apvs-1','2001:44b8:2148:2930::1'),
+			A('nas-apvs-1','10.41.48.2'),			AAAA('nas-apvs-1','2001:44b8:2148:2930::2')
 		);
 // REVERSE DOMAINS
 //Alpha - Production - Network - Hardware
@@ -84,6 +74,7 @@ D(REV('10.41.16.0/24'), REG_NONE, DnsProvider(DNS_BIND), NSSERVERS,
 			PTR('10.41.16.254', 'crs125-appr-1.thefathacker.tech.')
 		);
 D(REV('2001:44b8:2148:2910::/64'), REG_NONE, DnsProvider(DNS_BIND), NSSERVERS,
+			PTR('2001:44b8:2148:2910::1', 'wrt-appr-1.thefathacker.tech.'),
 			PTR('2001:44b8:2148:2910::fe', 'crs125-appr-1.thefathacker.tech.')
 		);
 //Alpha - Production - Hypervisor - Hardware
@@ -96,6 +87,15 @@ D(REV('2001:44b8:2148:2911::/64'), REG_NONE, DnsProvider(DNS_BIND), NSSERVERS,
 			PTR('2001:44b8:2148:2911::1', 'esx-apps-1.vcs.thefathacker.tech.'),
 			PTR('2001:44b8:2148:2911::2', 'esx-apps-2.vcs.thefathacker.tech.'),
 			PTR('2001:44b8:2148:2911::fe', 'crs125-appr-1.thefathacker.tech.')
+		);
+//Alpha - Production - Container Hosts
+D(REV('10.41.18.0/24'), REG_NONE, DnsProvider(DNS_BIND), NSSERVERS,
+			PTR('10.41.18.1', 'docker-apps-1.vcs.thefathacker.tech.'),
+			PTR('10.41.18.254', 'crs125-appr-1.thefathacker.tech.')
+		);
+D(REV('2001:44b8:2148:2912::/64'), REG_NONE, DnsProvider(DNS_BIND), NSSERVERS,
+			PTR('2001:44b8:2148:2912::1', 'docker-apps-1.vcs.thefathacker.tech.'),
+			PTR('2001:44b8:2148:2912::fe', 'crs125-appr-1.thefathacker.tech.')
 		);
 //Alpha - Production - NetOps - Primary
 D(REV('10.41.32.0/24'), REG_NONE, DnsProvider(DNS_BIND), NSSERVERS,
@@ -128,33 +128,11 @@ D(REV('2001:44b8:2148:2921::/64'), REG_NONE, DnsProvider(DNS_BIND), NSSERVERS,
 //Alpha - Production - Applications
 D(REV('10.41.48.0/24'), REG_NONE, DnsProvider(DNS_BIND), NSSERVERS,
 			PTR('10.41.48.1', 'dude-apvs-1.thefathacker.tech.'),
-			PTR('10.41.48.2', 'glpi-apvs-1.thefathacker.tech.'),
-			PTR('10.41.48.3', 'netbox-apvs-1.thefathacker.tech.'),
+			PTR('10.41.48.2', 'nas-apvs-1.thefathacker.tech.'),
 			PTR('10.41.48.254', 'crs125-appr-1.thefathacker.tech.')
 		);
 D(REV('2001:44b8:2148:2930::/64'), REG_NONE, DnsProvider(DNS_BIND), NSSERVERS,
 			PTR('2001:44b8:2148:2930::1', 'dude-apvs-1.thefathacker.tech.'),
-			PTR('2001:44b8:2148:2930::2', 'glpi-apvs-1.thefathacker.tech.'),
-			PTR('2001:44b8:2148:2930::3', 'netbox-apvs-1.thefathacker.tech.'),
+			PTR('2001:44b8:2148:2930::2', 'nas-apvs-1.thefathacker.tech.'),
 			PTR('2001:44b8:2148:2930::fe', 'crs125-appr-1.thefathacker.tech.')
-		);
-//Alpha - Production - Databases
-D(REV('10.41.49.0/24'), REG_NONE, DnsProvider(DNS_BIND), NSSERVERS,
-			PTR('10.41.49.1', 'mysql-apvs-1.thefathacker.tech.'),
-			PTR('10.41.49.2', 'psql-apvs-1.thefathacker.tech.'),
-			PTR('10.41.49.254', 'crs125-appr-1.thefathacker.tech.')
-		);
-D(REV('2001:44b8:2148:2931::/64'), REG_NONE, DnsProvider(DNS_BIND), NSSERVERS,
-			PTR('2001:44b8:2148:2931::1', 'mysql-apvs-1.thefathacker.tech.'),
-			PTR('2001:44b8:2148:2931::2', 'psql-apvs-1.thefathacker.tech.'),
-			PTR('2001:44b8:2148:2931::fe', 'crs125-appr-1.thefathacker.tech.')
-		);
-//Alpha - Production - Routes
-D(REV('10.41.255.0/24'), REG_NONE, DnsProvider(DNS_BIND), NSSERVERS,
-			PTR('10.41.255.253', 'crs125-appr-1.thefathacker.tech.'),
-			PTR('10.41.255.254', 'pfs-apvr-1.thefathacker.tech.')
-		);
-D(REV('2001:44b8:2148:29ff::/64'), REG_NONE, DnsProvider(DNS_BIND), NSSERVERS,
-			PTR('2001:44b8:2148:29ff::fd', 'crs125-appr-1.thefathacker.tech.'),
-			PTR('2001:44b8:2148:29ff::fe', 'pfs-apvr-1.thefathacker.tech.')
 		);
