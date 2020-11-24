@@ -62,7 +62,6 @@ D('thefathacker.tech', REG_NONE, DnsProvider(DNS_BIND), NSSERVERS, SPF, O365, ST
 			A('wrt-appr-1', '10.41.16.1'),			AAAA('wrt-appr-1','2001:44b8:2148:2910::1'),
 			A('esx-apps-1.vcs','10.41.17.1'),		AAAA('esx-apps-1.vcs','2001:44b8:2148:2911::1'),
 			A('esx-apps-2.vcs','10.41.17.2'),		AAAA('esx-apps-2.vcs','2001:44b8:2148:2911::2'),
-			A('docker-apvs-1','10.41.18.1'),	AAAA('docker-apvs-1','2001:44b8:2148:2912::1'),
 			A('vcs-apvs-1.vcs','10.41.32.4'),		AAAA('vcs-apvs-1.vcs','2001:44b8:2148:2920::4'),
 			A('dude-apvs-1','10.41.48.1'),			AAAA('dude-apvs-1','2001:44b8:2148:2930::1'),
 			A('nas-apvs-1','10.41.48.2'),			AAAA('nas-apvs-1','2001:44b8:2148:2930::2')
@@ -77,7 +76,7 @@ D(REV('2001:44b8:2148:2910::/64'), REG_NONE, DnsProvider(DNS_BIND), NSSERVERS,
 			PTR('2001:44b8:2148:2910::1', 'wrt-appr-1.thefathacker.tech.'),
 			PTR('2001:44b8:2148:2910::fe', 'crs125-appr-1.thefathacker.tech.')
 		);
-//Alpha - Production - Hypervisor - Hardware
+//Alpha - Production - Hypervisor - Management
 D(REV('10.41.17.0/24'), REG_NONE, DnsProvider(DNS_BIND), NSSERVERS,
 			PTR('10.41.17.1', 'esx-apps-1.vcs.thefathacker.tech.'),
 			PTR('10.41.17.2', 'esx-apps-2.vcs.thefathacker.tech.'),
@@ -88,14 +87,29 @@ D(REV('2001:44b8:2148:2911::/64'), REG_NONE, DnsProvider(DNS_BIND), NSSERVERS,
 			PTR('2001:44b8:2148:2911::2', 'esx-apps-2.vcs.thefathacker.tech.'),
 			PTR('2001:44b8:2148:2911::fe', 'crs125-appr-1.thefathacker.tech.')
 		);
-//Alpha - Production - Container Hosts
+//Alpha - Production - Hypervisor - VMotion
 D(REV('10.41.18.0/24'), REG_NONE, DnsProvider(DNS_BIND), NSSERVERS,
-			PTR('10.41.18.1', 'docker-apps-1.vcs.thefathacker.tech.'),
+			PTR('10.41.18.1', 'esx-apps-1.vcs.thefathacker.tech.'),
+			PTR('10.41.18.2', 'esx-apps-2.vcs.thefathacker.tech.'),
 			PTR('10.41.18.254', 'crs125-appr-1.thefathacker.tech.')
 		);
 D(REV('2001:44b8:2148:2912::/64'), REG_NONE, DnsProvider(DNS_BIND), NSSERVERS,
-			PTR('2001:44b8:2148:2912::1', 'docker-apps-1.vcs.thefathacker.tech.'),
+			PTR('2001:44b8:2148:2912::1', 'esx-apps-1.vcs.thefathacker.tech.'),
+			PTR('2001:44b8:2148:2912::2', 'esx-apps-2.vcs.thefathacker.tech.'),
 			PTR('2001:44b8:2148:2912::fe', 'crs125-appr-1.thefathacker.tech.')
+		);
+//Alpha - Production - Hypervisor - Storage Gigabit One
+D(REV('10.41.19.0/24'), REG_NONE, DnsProvider(DNS_BIND), NSSERVERS,
+			PTR('10.41.19.1', 'esx-apps-1.vcs.thefathacker.tech.'),
+			PTR('10.41.19.2', 'esx-apps-2.vcs.thefathacker.tech.'),
+			PTR('10.41.19.253', 'nas-apvs-1.thefathacker.tech.'),
+			PTR('10.41.19.254', 'crs125-appr-1.thefathacker.tech.')
+		);
+D(REV('2001:44b8:2148:2913::/64'), REG_NONE, DnsProvider(DNS_BIND), NSSERVERS,
+			PTR('2001:44b8:2148:2913::1', 'esx-apps-1.vcs.thefathacker.tech.'),
+			PTR('2001:44b8:2148:2913::2', 'esx-apps-2.vcs.thefathacker.tech.'),
+			PTR('2001:44b8:2148:2913::fd', 'nas-apvs-1.thefathacker.tech.'),
+			PTR('2001:44b8:2148:2913::fe', 'crs125-appr-1.thefathacker.tech.')
 		);
 //Alpha - Production - NetOps - Primary
 D(REV('10.41.32.0/24'), REG_NONE, DnsProvider(DNS_BIND), NSSERVERS,
